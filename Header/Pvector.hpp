@@ -2,24 +2,24 @@
 
 using namespace std;
 
-#ifndef PVECTOR_HPP
-#define PVECTOR_HPP
+#ifndef PVector_HPP
+#define PVector_HPP
 
-// The Pvector class implements Euclidian vectors -- that is, each vector has
-// both a magnitude and a direction. We use Pvectors for implementing movement
+// The PVector class implements Euclidian vectors -- that is, each vector has
+// both a magnitude and a direction. We use PVectors for implementing movement
 // and the three Boid rules -- cohesion, separation, and matching velocity
 // through the use of acceleration, force, and velocity vectors.
 
-class Pvector {
+class PVector {
 
 public:
     float x;
     float y;
 
     //Constructors
-    Pvector() {}
+    PVector() {}
 
-    Pvector(float xComp, float yComp)
+    PVector(float xComp, float yComp)
     {
         x = xComp;
         y = yComp;
@@ -29,30 +29,30 @@ public:
     void set(float x, float y);
 
     //Scalar functions scale a vector by a float
-    void addVector(const Pvector& v);
+    void addVector(const PVector& v);
     void addScalar(float x);
 
-    void subVector(const Pvector& v);
-    Pvector subTwoVector(const Pvector& v, const Pvector& v2);
+    void subVector(const PVector& v);
+    PVector subTwoVector(const PVector& v, const PVector& v2);
     void subScalar(float x);
 
-    void mulVector(const Pvector& v);
+    void mulVector(const PVector& v);
     void mulScalar(float x);
 
-    void divVector(const Pvector& v);
+    void divVector(const PVector& v);
     void divScalar(float x);
 
     void limit(double max);
 
     //Calculating Functions
-    float distance(const Pvector& v);
-    float dotProduct(const Pvector& v);
+    float distance(const PVector& v);
+    float dotProduct(const PVector& v);
     float magnitude();
     void setMagnitude(float x);
-    float angleBetween(const Pvector& v);
+    float angleBetween(const PVector& v);
     void normalize();
 
-    Pvector copy(const Pvector& v);
+    PVector copy(const PVector& v);
 };
 
 #endif

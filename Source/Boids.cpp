@@ -21,9 +21,9 @@ const int window_width = DesktopView.width;
 
 Boid::Boid(float x, float y)
 {
-    acceleration = Pvector(0, 0);
-    velocity = Pvector(rand()%3 - 2, rand()%3 - 2);
-    location = Pvector(x, y);
+    acceleration = PVector(0, 0);
+    velocity = PVector(rand()%3 - 2, rand()%3 - 2);
+    location = PVector(x, y);
     maxSpeed = 3.5;
     maxForce = 0.5;
 }
@@ -34,29 +34,29 @@ Boid::Boid(float x, float y, bool predCheck)
     if (predCheck == true) {
         maxSpeed = 7.5;
         maxForce = 0.5;
-        velocity = Pvector(rand()%3 - 1, rand()%3 - 1);
+        velocity = PVector(rand()%3 - 1, rand()%3 - 1);
     } else {
         maxSpeed = 3.5;
         maxForce = 0.5;
-        velocity = Pvector(rand()%3 - 2, rand()%3 - 2);
+        velocity = PVector(rand()%3 - 2, rand()%3 - 2);
     }
-    acceleration = Pvector(0, 0);
-    location = Pvector(x, y);
+    acceleration = PVector(0, 0);
+    location = PVector(x, y);
 }
 
-// Adds force Pvector to current force Pvector
-void Boid::applyForce(const Pvector& force)
+// Adds force PVector to current force PVector
+void Boid::applyForce(const PVector& force)
 {
     acceleration.addVector(force);
 }
 
 // Separation
 // Keeps boids from getting too close to one another
-Pvector Boid::Separation(const vector<Boid>& boids)
+PVector Boid::Separation(const vector<Boid>& boids)
 {
     // Distance of field of vision for separation between boids
     float desiredseparation = 20;
-    Pvector steer(0, 0);
+    PVector steer(0, 0);
     int count = 0;
     // For every boid in the system, check if it's too close
     for (int i = 0; i < boids.size(); i++) {
@@ -64,7 +64,7 @@ Pvector Boid::Separation(const vector<Boid>& boids)
         float d = location.distance(boids[i].location);
         // If this is a fellow boid and it's too close, move away from it
         if ((d > 0) && (d < desiredseparation)) {
-            Pvector diff(0,0);
+            PVector diff(0,0);
             diff = diff.subTwoVector(location, boids[i].location);
             diff.normalize();
             diff.divScalar(d);      // Weight by distance
@@ -75,7 +75,7 @@ Pvector Boid::Separation(const vector<Boid>& boids)
         // a predator, then separate only slightly
         if ((d > 0) && (d < desiredseparation) && predator == true
             && boids[i].predator == true) {
-            Pvector pred2pred(0, 0);
+            PVector pred2pred(0, 0);
             pred2pred = pred2pred.subTwoVector(location, boids[i].location);
             pred2pred.normalize();
             pred2pred.divScalar(d);
@@ -83,9 +83,9 @@ Pvector Boid::Separation(const vector<Boid>& boids)
             count++;
         }
         // If current boid is not a predator, but the boid we're looking at is
-        // a predator, then create a large separation Pvector
+        // a predator, then create a large separation PVector
         else if ((d > 0) && (d < desiredseparation+70) && boids[i].predator == true) {
-            Pvector pred(0, 0);
+            PVector pred(0, 0);
             pred = pred.subTwoVector(location, boids[i].location);
             pred.mulScalar(900);
             steer.addVector(pred);
@@ -108,11 +108,11 @@ Pvector Boid::Separation(const vector<Boid>& boids)
 // Alignment
 // Calculates the average velocity of boids in the field of vision and
 // manipulates the velocity of the current boid in order to match it
-Pvector Boid::Alignment(const vector<Boid>& Boids)
+PVector Boid::Alignment(const vector<Boid>& Boids)
 {
     float neighbordist = 50; // Field of vision
 
-    Pvector sum(0, 0);
+    PVector sum(0, 0);
     int count = 0;
     for (int i = 0; i < Boids.size(); i++) {
         float d = location.distance(Boids[i].location);
@@ -127,12 +127,12 @@ Pvector Boid::Alignment(const vector<Boid>& Boids)
         sum.normalize();            // Turn sum into a unit vector, and
         sum.mulScalar(maxSpeed);    // Multiply by maxSpeed
         // Steer = Desired - Velocity
-        Pvector steer;
+        PVector steer;
         steer = steer.subTwoVector(sum, velocity); //sum = desired(average)
         steer.limit(maxForce);
         return steer;
     } else {
-        Pvector temp(0, 0);
+        PVector temp(0, 0);
         return temp;
     }
 }
@@ -140,10 +140,10 @@ Pvector Boid::Alignment(const vector<Boid>& Boids)
 // Cohesion
 // Finds the average location of nearby boids and manipulates the
 // steering force to move in that direction.
-Pvector Boid::Cohesion(const vector<Boid>& Boids)
+PVector Boid::Cohesion(const vector<Boid>& Boids)
 {
     float neighbordist = 50;
-    Pvector sum(0, 0);
+    PVector sum(0, 0);
     int count = 0;
     for (int i = 0; i < Boids.size(); i++) {
         float d = location.distance(Boids[i].location);
@@ -156,16 +156,16 @@ Pvector Boid::Cohesion(const vector<Boid>& Boids)
         sum.divScalar(count);
         return seek(sum);
     } else {
-        Pvector temp(0,0);
+        PVector temp(0,0);
         return temp;
     }
 }
 
 // Limits the maxSpeed, finds necessary steering force and
 // normalizes vectors
-Pvector Boid::seek(const Pvector& v)
+PVector Boid::seek(const PVector& v)
 {
-    Pvector desired;
+    PVector desired;
     desired.subVector(v);  // A vector pointing from the location to the target
     // Normalize desired and scale to maximum speed
     desired.normalize();
@@ -204,9 +204,9 @@ void Boid::run(const vector <Boid>& v)
 // Applies the three laws to the flock of boids
 void Boid::flock(const vector<Boid>& v)
 {
-    Pvector sep = Separation(v);
-    Pvector ali = Alignment(v);
-    Pvector coh = Cohesion(v);
+    PVector sep = Separation(v);
+    PVector ali = Alignment(v);
+    PVector coh = Cohesion(v);
     // Arbitrarily weight these forces
     sep.mulScalar(1.5);
     ali.mulScalar(1.0); // Might need to alter weights for different characteristics
@@ -229,7 +229,7 @@ void Boid::borders()
 
 // Calculates the angle for the velocity of a boid which allows the visual
 // image to rotate in the direction that it is going in.
-float Boid::angle(const Pvector& v)
+float Boid::angle(const PVector& v)
 {
     // From the definition of the dot product
     float angle = (float)(atan2(v.x, -v.y) * 180 / PI);

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/Flock.hpp"
 #include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/Boids.hpp"
-#include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/Pvector.hpp"
+#include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/PVector.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 

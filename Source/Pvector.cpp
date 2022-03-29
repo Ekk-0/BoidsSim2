@@ -1,82 +1,82 @@
 #include <math.h>
-#include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/Pvector.hpp"
+#include "/Users/eavosloo/Programming/C++/sfml_projects/BoidsSim2/Header/PVector.hpp"
 
 // ===================================================== //
-// ======== Pvector Functions from Pvector.hpp ========= //
+// ======== PVector Functions from PVector.hpp ========= //
 // ===================================================== //
 
 #define PI 3.141592635
 
-// Sets values of x and y for Pvector
-void Pvector::set(float i, float o)
+// Sets values of x and y for PVector
+void PVector::set(float i, float o)
 {
     x = i;
     y = o;
 }
 
-void Pvector::addVector(const Pvector& v)
+void PVector::addVector(const PVector& v)
 {
     x += v.x;
     y += v.y;
 }
 
-// Adds to a Pvector by a constant number
-void Pvector::addScalar(float s)
+// Adds to a PVector by a constant number
+void PVector::addScalar(float s)
 {
     x += s;
     y += s;
 }
 
 // Subtracts 2 vectors
-void Pvector::subVector(const Pvector& v)
+void PVector::subVector(const PVector& v)
 {
     x -= v.x;
     y -= v.y;
 }
 
 // Subtracts two vectors and returns the difference as a vector
-Pvector Pvector::subTwoVector(const Pvector& v, const Pvector& v2)
+PVector PVector::subTwoVector(const PVector& v, const PVector& v2)
 {
-    Pvector tmp(v.x - v2.x, v.y - v2.y);
+    PVector tmp(v.x - v2.x, v.y - v2.y);
     return std::move(tmp);
 }
 
-// Adds to a Pvector by a constant number
-void Pvector::subScalar(float s)
+// Adds to a PVector by a constant number
+void PVector::subScalar(float s)
 {
     x -= s;
     y -= s;
 }
 
 // Multiplies 2 vectors
-void Pvector::mulVector(const Pvector& v)
+void PVector::mulVector(const PVector& v)
 {
     x *= v.x;
     y *= v.y;
 }
 
-// Adds to a Pvector by a constant number
-void Pvector::mulScalar(float s)
+// Adds to a PVector by a constant number
+void PVector::mulScalar(float s)
 {
     x *= s;
     y *= s;
 }
 
 // Divides 2 vectors
-void Pvector::divVector(const Pvector& v)
+void PVector::divVector(const PVector& v)
 {
     x /= v.x;
     y /= v.y;
 }
 
-// Adds to a Pvector by a constant number
-void Pvector::divScalar(float s)
+// Adds to a PVector by a constant number
+void PVector::divScalar(float s)
 {
     x /= s;
     y /= s;
 }
 
-void Pvector::limit(double max)
+void PVector::limit(double max)
 {
     double size = magnitude();
 
@@ -85,8 +85,8 @@ void Pvector::limit(double max)
     }
 }
 
-// Calculates the distance between the first Pvector and second Pvector
-float Pvector::distance(const Pvector& v)
+// Calculates the distance between the first PVector and second PVector
+float PVector::distance(const PVector& v)
 {
     float dx = x - v.x;
     float dy = y - v.y;
@@ -95,26 +95,26 @@ float Pvector::distance(const Pvector& v)
 }
 
 // Calculates the dot product of a vector
-float Pvector::dotProduct(const Pvector& v)
+float PVector::dotProduct(const PVector& v)
 {
     float dot = x * v.x + y * v.y;
     return dot;
 }
 
 // Calculates magnitude of referenced object
-float Pvector::magnitude()
+float PVector::magnitude()
 {
     return sqrt(x*x + y*y);
 }
 
-void Pvector::setMagnitude(float x)
+void PVector::setMagnitude(float x)
 {
     normalize();
     mulScalar(x);
 }
 
-// Calculate the angle between Pvector 1 and Pvector 2
-float Pvector::angleBetween(const Pvector& v)
+// Calculate the angle between PVector 1 and PVector 2
+float PVector::angleBetween(const PVector& v)
 {
     if (x == 0 && y == 0) return 0.0f;
     if (v.x == 0 && v.y == 0) return 0.0f;
@@ -134,7 +134,7 @@ float Pvector::angleBetween(const Pvector& v)
 }
 
 // normalize divides x and y by magnitude if it has a magnitude.
-void Pvector::normalize()
+void PVector::normalize()
 {
     float m = magnitude();
 
@@ -145,9 +145,9 @@ void Pvector::normalize()
     }
 }
 
-// Creates and returns a copy of the Pvector used as a parameter
-Pvector Pvector::copy(const Pvector& v)
+// Creates and returns a copy of the PVector used as a parameter
+PVector PVector::copy(const PVector& v)
 {
-    Pvector copy(v.x, v.y);
+    PVector copy(v.x, v.y);
     return copy;
 }
