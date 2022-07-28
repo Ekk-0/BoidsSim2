@@ -6,6 +6,8 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 
+using namespace sf;
+
 // Construct window using SFML
 Game::Game()
 {
@@ -13,7 +15,7 @@ Game::Game()
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     this->window_height = desktop.height;
     this->window_width  = desktop.width;
-    this->window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids Simulation 2", sf::Style::Fullscreen);
+    this->window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids Simulation 2");
     
     // Try to achieve 60 FPS.
     window.setFramerateLimit(60);
